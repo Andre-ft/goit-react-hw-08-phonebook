@@ -19,7 +19,7 @@ const fetchContacts = () => async dispatch => {
   dispatch(fetchContactsRequest());
 
   try {
-    const { data } = await axios.get('/tasks');
+    const { data } = await axios.get('/contacts');
 
     dispatch(fetchContactsSuccess(data));
   } catch (error) {
@@ -28,26 +28,28 @@ const fetchContacts = () => async dispatch => {
 };
 
 // POST @ /tasks
-const addContact = description => dispatch => {
-  const todo = {
-    description,
-    completed: false,
+const addContact =
+  ({ name, number }) =>
+  dispatch => {
+    const contact = {
+      name,
+      number,
+    };
+
+    dispatch(addContactRequest());
+
+    axios
+      .post('/contacts', contact)
+      .then(({ data }) => dispatch(addContactSuccess(data)))
+      .catch(error => dispatch(addContactError(error.message)));
   };
-
-  dispatch(addContactRequest());
-
-  axios
-    .post('/tasks', todo)
-    .then(({ data }) => dispatch(addContactSuccess(data)))
-    .catch(error => dispatch(addContactError(error.message)));
-};
 
 // DELETE @ /tasks/:id
 const deleteContact = contactId => dispatch => {
   dispatch(deleteContactRequest());
 
   axios
-    .delete(`/tasks/${contactId}`)
+    .delete(`/contacts/${contactId}`)
     .then(() => dispatch(deleteContactSuccess(contactId)))
     .catch(error => dispatch(deleteContactError(error.message)));
 };
