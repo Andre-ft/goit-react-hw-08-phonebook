@@ -3,7 +3,7 @@ import shortid from 'shortid';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import s from './ContactForm.module.css';
 import {addContact, deleteContact, changeFilter} from '../../redux/contacts/contacts-actions'
-import { getItems } from '../../redux/contacts/contacts-selectors';
+// import { getItems } from '../../redux/contacts/contacts-selectors';
 import { useFetchContactsQuery, useCreateContactMutation } from '../../redux/contacts/contactsSlice';
 import { Spinner } from '../Spinner/Spinner';
 import  toast, { Toaster }  from 'react-hot-toast';
