@@ -2,10 +2,15 @@ import React from 'react';
 import s from './ContactListItem.module.css';
 import { useFetchContactsQuery, useDeleteContactMutation } from '../../redux/contacts/contactsSlice';
 import { Spinner } from '../Spinner/Spinner';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import { contactsOperations } from '../../redux/contacts';
 
 
 export const ContactListItem = ({id, name, number}) => {
-    const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
+  const [{ isLoading: isDeleting }] = useDeleteContactMutation();
+    const dispatch = useDispatch();
+
+  const deleteContact = () => dispatch(contactsOperations.deleteContact(id));
 
     return (
          <li className={s.contactList__item}>

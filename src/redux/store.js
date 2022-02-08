@@ -12,8 +12,9 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { contactApi } from './contacts/contactsSlice';
+// import { contactApi } from './contacts/contactsSlice';
 import { authReducer } from './auth';
+import { contactsReducer } from './contacts';
 
 // const initialState = {
 //   contacts: {
@@ -72,7 +73,7 @@ const middleware = [
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
   }),
-  contactApi.middleware,
+  // contactApi.middleware,
   // logger,
 ];
 
@@ -96,7 +97,7 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
-    [contactApi.reducerPath]: contactApi.reducer,
+    contacts: contactsReducer,
   },
   middleware,
   devTools: process.env.NODE_ENV === 'development',

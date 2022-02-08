@@ -2,11 +2,13 @@ import React, {  useState } from 'react';
 import shortid from 'shortid';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import s from './ContactForm.module.css';
-import {addContact, deleteContact, changeFilter} from '../../redux/contacts/contacts-actions'
+// import {addContact, deleteContact, changeFilter} from '../../redux/contacts/contacts-actions'
 // import { getItems } from '../../redux/contacts/contacts-selectors';
 import { useFetchContactsQuery, useCreateContactMutation } from '../../redux/contacts/contactsSlice';
 import { Spinner } from '../Spinner/Spinner';
 import  toast, { Toaster }  from 'react-hot-toast';
+import { contactsOperations } from '../../redux/contacts';
+import { getItems } from '../../redux/contacts/contacts-selectors';
 
 
 // function ContactForm({ onSubmit, contactList }) {
@@ -16,17 +18,20 @@ export default function ContactForm() {
     //   number: '',
     //   btnEnable: true,
     // };
-    
-    const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
-    const [btnEnable, setBtnEnable] = useState(true);
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const [btnEnable, setBtnEnable] = useState(true);
     
   // const contactList = useSelector(getItems);
-  const { data, isFetching } = useFetchContactsQuery();
+
+  // const { data, isFetching } = useFetchContactsQuery();
   const [createContact, { isLoading, isSuccess }] = useCreateContactMutation();
+
+  const data = useSelector(getItems)
+
   
-  // const dispatch = useDispatch();
-  const onSubmit = () => createContact({ name, number });
+  const onSubmit = () => dispatch(contactsOperations.addContact({ name, number }));
   
   const nameInputId = shortid.generate();
   const numberInputId = shortid.generate();
@@ -128,17 +133,3 @@ export default function ContactForm() {
     );
 }
 
-// export default ContactForm;
-
-// const mapStateToProps = state =>{
-//  return {
-//    contactList: state.contacts.items,
-
-//  }
-// }
-// const mapDispatchToProps = dispatch => {
-// return {
-//     onSubmit: ({name, number}) => dispatch(addContact({name, number}))
-//   }
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

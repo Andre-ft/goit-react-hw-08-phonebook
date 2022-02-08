@@ -1,8 +1,5 @@
 import axios from 'axios';
 import {
-  //   deleteContact,
-  //   addContact,
-  //   changeFilter,
   fetchContactsSuccess,
   fetchContactsRequest,
   fetchContactsError,
@@ -14,7 +11,6 @@ import {
   deleteContactError,
 } from './contacts-actions';
 
-// GET @ /tasks
 const fetchContacts = () => async dispatch => {
   dispatch(fetchContactsRequest());
 
@@ -27,7 +23,6 @@ const fetchContacts = () => async dispatch => {
   }
 };
 
-// POST @ /tasks
 const addContact =
   ({ name, number }) =>
   dispatch => {
@@ -44,7 +39,6 @@ const addContact =
       .catch(error => dispatch(addContactError(error.message)));
   };
 
-// DELETE @ /tasks/:id
 const deleteContact = contactId => dispatch => {
   dispatch(deleteContactRequest());
 
